@@ -445,7 +445,7 @@
 </template>
 
 <script>
-import './assets/scss/style.scss'
+import './styles/style.scss'
 import Arrow from './components/Arrow.vue'
 import TimeIcon from './components/TimeIcon.vue'
 import CalendarIcon from './components/CalendarIcon.vue'
@@ -1150,7 +1150,11 @@ export default {
     },
     displayValue() {
       let format = this.selfDisplayFormat
-      return this.output
+      // TODO: improve me
+      const output = this.output.length === 0 && this.modelValue && this.modelValue !== ''
+        ? [this.getMoment(this.modelValue)]
+        : this.output;
+      return output
         .map(item => {
           let output = item.clone()
           ;/j\w/.test(format) && output.locale('fa')

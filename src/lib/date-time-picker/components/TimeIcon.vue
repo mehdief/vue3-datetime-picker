@@ -1,6 +1,5 @@
 <template>
   <svg
-    version="1.1"
     role="presentation"
     width="16"
     height="16"
