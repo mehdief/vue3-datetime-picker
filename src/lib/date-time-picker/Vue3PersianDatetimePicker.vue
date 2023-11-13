@@ -522,7 +522,7 @@ export default {
      *
      * @see https://github.com/jalaali/moment-jalaali
      */
-    format: { type: String, default: '' },
+    format: { type: String, default: 'date' },
 
     /**
      * Step to view on startup
@@ -1149,11 +1149,15 @@ export default {
       return format
     },
     displayValue() {
+      let output = this.output;
+      if (output.length === 0) {
+        const modelValues = Array.isArray(this.modelValue) ? this.modelValue : [this.modelValue];
+        if (modelValues.some(value => (value ?? null) != null && (String(value).trim().length > 0))) {
+          output = modelValues.map(value => this.getMoment(value));
+        }
+      }
+
       let format = this.selfDisplayFormat
-      // TODO: improve me
-      const output = this.output.length === 0 && this.modelValue && this.modelValue !== ''
-        ? [this.getMoment(this.modelValue)]
-        : this.output;
       return output
         .map(item => {
           let output = item.clone()
